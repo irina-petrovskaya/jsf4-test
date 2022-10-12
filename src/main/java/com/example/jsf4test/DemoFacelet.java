@@ -11,7 +11,7 @@ import jakarta.faces.view.facelets.Facelet;
 import java.io.IOException;
 import java.util.List;
 
-@View("/demo.xhtml")
+@View("/java_pages/demo.xhtml")// would be ice to make this route resolved
 @ApplicationScoped
 public class DemoFacelet extends Facelet {
     @Override
