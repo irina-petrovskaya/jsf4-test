@@ -1,5 +1,8 @@
 package com.example.jsf4test;
 import static jakarta.faces.application.StateManager.IS_BUILDING_INITIAL_STATE;
+
+import jakarta.el.ELContext;
+import jakarta.el.ExpressionFactory;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.faces.annotation.View;
 import jakarta.faces.component.UIComponent;
@@ -19,6 +22,8 @@ public class DemoFacelet extends Facelet {
         if (!facesContext.getAttributes().containsKey(IS_BUILDING_INITIAL_STATE)) {
             return;
         }
+        ELContext elContext = facesContext.getELContext();
+        ExpressionFactory expressionFactory = facesContext.getApplication().getExpressionFactory();
         ComponentBuilder components = new ComponentBuilder(facesContext);
         List<UIComponent> rootChildren = root.getChildren();
         UIOutput output = new UIOutput();
@@ -26,6 +31,9 @@ public class DemoFacelet extends Facelet {
         rootChildren.add(output);
         HtmlBody body = components.create(HtmlBody.COMPONENT_TYPE);
         rootChildren.add(body);
+        HtmlOutputText fromEL = new HtmlOutputText();
+        fromEL.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{foo.message}", String.class));
+        body.getChildren().add(fromEL);
         HtmlForm form = components.create(HtmlForm.COMPONENT_TYPE);
         form.setId("form");
         body.getChildren().add(form);

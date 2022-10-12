@@ -16,23 +16,17 @@ import java.util.List;
 @RequestScoped
 public class Foo {
     private String id = "foo";
+    private String message = "Java Pages Test";
     private boolean flag = true;
     private final List<String> mylist = Arrays.asList("aaa","bbb","ccc");
-    private final String some_str = "_value";
 
     public String getId() {
         return id;
     }
 
-    public void setId(String id) {
-        System.out.println("!!!!!!!!!!!!!!!");
-        this.id = id;
+    public String getMessage() {
+        return message;
     }
-    public void fooo(){ System.out.println("*************");
-
-    }
-
-
 
     public void setFlag(boolean flag) {
         this.flag = flag;
@@ -47,6 +41,6 @@ public class Foo {
     }
 
     public String getSome_str() {
-        return some_str;
+        return "_value";
     }
 }
