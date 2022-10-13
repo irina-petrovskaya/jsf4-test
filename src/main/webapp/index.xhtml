@@ -12,22 +12,50 @@
       xmlns:c="jakarta.tags.core"
       xmlns:fn="jakarta.tags.functions">
 
-<c:if test="#{foo.flag}"><h:outputLabel id="aaa" value="${foo.id}"/></c:if>
-<ul>
-    <c:forEach items="#{foo.mylist}" var="list_el" varStatus="metadata">
-        <li style="background-color:#{ (metadata.odd ? 'yellow' : 'grey')}">
-            <h:outputText value=" #{metadata.index}, #{list_el}"/>
-        </li>
-    </c:forEach>
-</ul>
-<p>#{fn:containsIgnoreCase(request.requestURI,'index')}</p>
-<p>#{fn:substring(foo.some_str,1,-1)}</p>
-<div id="customComponents">
-    <p>Custom components:</p>
-<p><my:myUIOutputComponent value="component with default namespace and tag, extends UIOutputComponent" /></p>
-<p><my:myCustomComponentWithAllDefaults prop1="component with default namespace and tag, tag name == class name" /></p>
-<p><my:myCompoTag prop1="component with default namespace, tag name == @FacesComponent#tag" /></p>
-<p><my2:myCompo message="component with namespace and tag taken from @FacesComponent#namespace and #tag" author="irina" /></p>
+<div id="tags.core">
+    <p>Tags.core test:</p>
+    <c:if test="#{foo.flag}"><h:outputLabel id="aaa" value="${foo.id}"/></c:if>
+    <ul>
+        <c:forEach items="#{foo.mylist}" var="list_el" varStatus="metadata">
+            <li style="background-color:#{ (metadata.odd ? 'yellow' : 'grey')}">
+                <h:outputText value=" #{metadata.index}, #{list_el}"/>
+            </li>
+        </c:forEach>
+    </ul>
 </div>
-<a href="java_pages/demo.xhtml">java page</a>
+<div id="tags.functions">
+    <p>Tags.functions test:</p>
+    <p>#{fn:containsIgnoreCase(request.requestURI,'index')}</p>
+    <p>#{fn:substring(foo.some_str,1,-1)}</p></div>
+<div id="customComponents">
+    <p>Custom components test:</p>
+    <p><my:myUIOutputComponent value="component with default namespace and tag, extends UIOutputComponent"/></p>
+    <p><my:myCustomComponentWithAllDefaults prop1="component with default namespace and tag, tag name == class name"/>
+    </p>
+    <p><my:myCompoTag prop1="component with default namespace, tag name == @FacesComponent#tag"/></p>
+    <p><my2:myCompo message="component with namespace and tag taken from @FacesComponent#namespace and #tag"
+                    author="irina"/></p>
+</div>
+<div id="javaPages">
+    <p>Navigate to java page:</p>
+    <a href="java_pages/demo.xhtml">java page</a>
+</div>
+<div id="selectItemGroupsTest">
+    <p>SelectItemGroups test:</p>
+    <h:form>
+        <h:selectOneMenu id="input" value="#{barBean.name}">
+            <f:selectItemGroups value="#{barBean.items}" var="baritem" itemLabel="#{baritem.name}">
+                <f:selectItems value="#{baritem.features}" var="feature" itemValue="#{feature.flag.concat(' '.concat(feature.name))}"
+                               itemLabel="#{feature.name}"/>
+            </f:selectItemGroups>
+        </h:selectOneMenu>
+        <h:commandButton id="submit" value="submit"/>
+        <h:messages id="messages"/>
+        <h:outputText id="output" value="#{barBean.name}"/>
+    </h:form>
+</div>
+<div id="inputTextType">
+    <p>inputText#type: shouldn't we weaken the inspection severity?</p>
+    <h:inputText type="foo"/>
+</div>
 </html>
